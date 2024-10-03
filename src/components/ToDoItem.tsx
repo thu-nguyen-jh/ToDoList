@@ -1,27 +1,28 @@
-import { statusData } from "../data";
+import { ToDoItemType } from "../config/interface";
+import statusEnum from "../config/statusData";
 
-//@ts-ignore
-function TodoItem({ task, deleteTask, toggleCompleted }) {
-  function handleChange() {
-    toggleCompleted(task.id);
-  }
+function ToDoItem({
+  task,
+  deleteTask,
+  toggleCompleted,
+}: {
+  task: ToDoItemType;
+  deleteTask: (id: number) => void;
+  toggleCompleted: (id: number) => void;
+}) {
+  const { id, status_id, title } = task;
   return (
     <div className="todo-item">
       <input
-        id={task.id}
+        id={id.toString()}
         type="checkbox"
-        checked={task.status_id ? true : false}
-        onChange={handleChange}
+        checked={status_id ? true : false}
+        onChange={() => toggleCompleted(id)}
       />
-      <p>{task.title}</p>
-      <div>
-        {
-          statusData.filter((item) => item.status_id === task.status_id)[0]
-            .status_name
-        }
-      </div>
-      <button onClick={() => deleteTask(task.id)}>X</button>
+      <p>{title}</p>
+      <div>{statusEnum[status_id]}</div>
+      <button onClick={() => deleteTask(id)}>X</button>
     </div>
   );
 }
-export default TodoItem;
+export default ToDoItem;
