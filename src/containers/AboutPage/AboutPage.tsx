@@ -1,0 +1,1 @@
+import Card, {CardHeader} from "./components/SectionAboutUs/SectionAboutUs";

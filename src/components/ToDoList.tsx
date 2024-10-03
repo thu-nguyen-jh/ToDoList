@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { FormEvent, Fragment, useState } from "react";
 import TodoItem from "./ToDoItem";
 import { statusData, toDoData } from "../data";
 
@@ -8,29 +8,35 @@ type ToDoItem = {
   status_id: number;
 };
 
+const ButtonAddToDoList = ({ onAdd }: {onAdd: (task: string) => void}) => {
+  const [text, setText] = useState<string>("");
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const formData = new FormData(event.currentTarget);
+    onAdd(formData.get('add') as string);
+    event.currentTarget.reset();
+  }
+  return (
+    <form className="todo_add" onSubmit={handleSubmit}>
+      <input
+        value={text}
+        name='add'
+        id="add"
+        onChange={(e) => setText(e.target.value)}
+      />
+      <button
+        type='submit'
+      >
+        Add
+      </button>
+    </form>
+  );
+};
+
 const ToDoList = () => {
   const [toDoList, setToDoList] = useState<ToDoItem[]>(toDoData);
   const [filterStatus, setFilterStatus] = useState(-1);
 
-  const ButtonAddToDoList = () => {
-    const [text, setText] = useState<string>("");
-    return (
-      <div className="todo_add">
-        <input
-          value={text}
-          id="add"
-          onChange={(e) => setText(e.target.value)}
-        />
-        <button
-          onClick={() => {
-            addTask(text);
-          }}
-        >
-          Add
-        </button>
-      </div>
-    );
-  };
+
 
   const ToDoFilter = ({ status_id }: { status_id: number }) => {
     if (status_id === -1) {
@@ -79,40 +85,29 @@ const ToDoList = () => {
       )
     );
   }
+
+  const toDoListForRender = filterStatus < 0 ? toDoList : toDoList.filter(...);
   return (
     <>
       <div className="todo-filter">
         <ToDoFilter status_id={-1} />
         {statusData.map((item) => {
           return (
-            <Fragment key={item.status_id}>
-              <ToDoFilter status_id={item.status_id} />
-            </Fragment>
+            <ToDoFilter key={item.status_id} status_id={item.status_id} />
           );
         })}
       </div>
       <div className="todo-list">
-        {filterStatus < 0
-          ? toDoList.map((task) => (
-              <TodoItem
-                key={task.id}
-                task={task}
-                deleteTask={deleteTask}
-                toggleCompleted={toggleCompleted}
-              />
-            ))
-          : toDoList
-              .filter((item) => item.status_id === filterStatus)
-              .map((task) => (
-                <TodoItem
-                  key={task.id}
-                  task={task}
-                  deleteTask={deleteTask}
-                  toggleCompleted={toggleCompleted}
-                />
-              ))}
+        {toDoListForRender.map((task) => (
+          <TodoItem
+            key={task.id}
+            task={task}
+            deleteTask={deleteTask}
+            toggleCompleted={toggleCompleted}
+          />
+        ))}
       </div>
-      <ButtonAddToDoList />
+      <ButtonAddToDoList onAdd={addTask}/>
     </>
   );
 };
