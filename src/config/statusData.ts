@@ -2,12 +2,12 @@ import { Status } from "./interface";
 
 export const statusData = [
   {
-    status_id: 1,
-    status_name: "Done",
+    statusId: 1,
+    statusName: "Done",
   },
   {
-    status_id: 0,
-    status_name: "Pending",
+    statusId: 0,
+    statusName: "Pending",
   },
 ];
 

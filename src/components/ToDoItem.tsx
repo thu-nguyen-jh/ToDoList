@@ -10,17 +10,17 @@ function ToDoItem({
   deleteTask: (id: number) => void;
   toggleCompleted: (id: number) => void;
 }) {
-  const { id, status_id, title } = task;
+  const { id, statusId, title } = task;
   return (
     <div className="todo-item">
       <input
         id={id.toString()}
         type="checkbox"
-        checked={status_id ? true : false}
+        checked={statusId ? true : false}
         onChange={() => toggleCompleted(id)}
       />
       <p>{title}</p>
-      <div>{statusEnum[status_id]}</div>
+      <div>{statusEnum[statusId]}</div>
       <button onClick={() => deleteTask(id)}>X</button>
     </div>
   );

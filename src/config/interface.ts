@@ -1,7 +1,7 @@
 export interface ToDoItemType {
   id: number,
   title: string,
-  status_id: number
+  statusId: number
 };
 export interface Status {
   [key: number]: string;

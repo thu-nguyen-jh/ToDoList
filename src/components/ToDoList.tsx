@@ -13,7 +13,7 @@ const ToDoList = () => {
     const newTask = {
       id: Date.now(),
       title: text,
-      status_id: 0,
+      statusId: 0,
     };
     setToDoList([...toDoList, newTask]);
   }
@@ -23,17 +23,17 @@ const ToDoList = () => {
   function toggleCompleted(id: number) {
     setToDoList((prevData) =>
       prevData.map((item) =>
-        item.id === id ? { ...item, status_id: item.status_id ? 0 : 1 } : item
+        item.id === id ? { ...item, statusId: item.statusId ? 0 : 1 } : item
       )
     );
   }
   const toDoDataForRender =
     filterStatus < 0
       ? toDoList
-      : toDoList.filter((item) => item.status_id === filterStatus);
+      : toDoList.filter((item) => item.statusId === filterStatus);
 
   const filterDataForRender = [
-    { status_id: -1, status_name: "All" },
+    { statusId: -1, statusName: "All" },
     ...statusData,
   ];
   console.log({ filterDataForRender });
@@ -44,7 +44,7 @@ const ToDoList = () => {
           return (
             <ToDoFilter
               key={index}
-              status_id={item.status_id}
+              statusId={item.statusId}
               setFilterStatus={setFilterStatus}
             />
           );

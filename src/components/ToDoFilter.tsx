@@ -2,20 +2,20 @@ import React from "react";
 import statusEnum from "../config/statusData";
 
 const ToDoFilter = ({
-  status_id,
+  statusId,
   setFilterStatus,
 }: {
-  status_id: number;
+  statusId: number;
   setFilterStatus: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const statusName = statusEnum[status_id];
+  const statusName = statusEnum[statusId];
   return (
     <button
       onClick={() => {
-        setFilterStatus(status_id);
+        setFilterStatus(statusId);
       }}
     >
-      {status_id < 0 ? "All" : statusName}
+      {statusId < 0 ? "All" : statusName}
     </button>
   );
 };
